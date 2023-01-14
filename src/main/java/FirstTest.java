@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
@@ -34,6 +35,14 @@ public class FirstTest {
     By actualReceiverFIO = By.xpath("//div[@data-qa-node='receiver-name']");
     By actualReceiverAmount = By.xpath("//div[@data-qa-node='receiver-amount']");
     By commentActual = By.xpath("//div[@data-qa-node='comment']");
+    By SumInputMobiPay = By.xpath("//input[@data-qa-node='amount']");
+    By TelNumberMobiPay = By.xpath("//input[@data-qa-node='phone-number']");
+    By cardFromMobiPay = By.xpath("//input[@data-qa-node='numberdebitSource']");
+    By expDateMobiPay = By.xpath("//input[@data-qa-node='expiredebitSource']");
+    By cvvMobiPay = By.xpath("//input[@data-qa-node='cvvdebitSource']");
+    By payerNameMobiPay = By.xpath("//input[@data-qa-node='firstNamedebitSource']");
+    By payerSurnameMobiPay = By.xpath("//input[@data-qa-node='lastNamedebitSource']");
+    By submitBtnMobiPay = By.xpath("//button[@data-qa-node='submit']");
 
     @Test
     void checkAddToBasketMinPaymentSum() {
@@ -82,4 +91,22 @@ public class FirstTest {
 
     }
 
+    @Test
+    void checkPrivatMobiPayment() {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+
+        driver.get("https://next.privat24.ua/mobile");
+        driver.manage().window().fullscreen();
+        //code to clear input field
+        driver.findElement(TelNumberMobiPay).sendKeys("997114177");
+        driver.findElement(SumInputMobiPay).sendKeys(Keys.CONTROL + "a");
+        driver.findElement(SumInputMobiPay).sendKeys(Keys.DELETE);
+        driver.findElement(SumInputMobiPay).sendKeys("50");
+        driver.findElement(cardFromMobiPay).sendKeys("4004159115449003");
+        driver.findElement(expDateMobiPay).sendKeys("0325");
+        driver.findElement(cvvMobiPay).sendKeys("222");
+        driver.findElement(payerNameMobiPay).sendKeys("Test");
+        driver.findElement(payerSurnameMobiPay).sendKeys("Testovich");
+        driver.findElement(submitBtnMobiPay).submit();
+    }
 }
